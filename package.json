@@ -1,35 +1,40 @@
 {
-  "name": "img-loader",
-  "version": "0.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "vp dev",
-    "build": "tsc && vp build",
-    "preview": "vp preview"
-  },
-  "devDependencies": {
-    "typescript": "~7.0.2",
-    "vite": "npm:@voidzero-dev/vite-plus-core@8.3.8001",
-    "vite-plus": "1.8.0"
-  },
-  "overrides": {
-    "vite": "npm:@voidzero-dev/vite-plus-core@8.3.8001"
-  },
-  "devEngines": {
-    "packageManager": {
-      "name": "npm",
-      "version": "12.2.3",
-      "onFail": "download"
+    "name": "img-loader",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vp dev",
+        "build": "tsc && vp build",
+        "preview": "vp preview",
+        "code:format": "vp format",
+        "code:lint": "vp lint"
+    },
+    "dependencies": {
+        "@emotion/react": "^11.14.0",
+        "@emotion/styled": "^11.14.1",
+        "@mui/icons-material": "^9.6.0",
+        "@mui/material": "^9.6.0",
+        "dexie": "^4.4.7",
+        "dexie-react-hooks": "^4.4.0",
+        "react": "^19.3.1",
+        "react-dom": "^19.3.1"
+    },
+    "devDependencies": {
+        "@types/react": "^19.3.3",
+        "@types/react-dom": "^19.3.0",
+        "typescript": "~7.0.2",
+        "vite": "npm:@voidzero-dev/vite-plus-core@8.3.8001",
+        "vite-plus": "1.8.0"
+    },
+    "overrides": {
+        "vite": "npm:@voidzero-dev/vite-plus-core@8.3.8001"
+    },
+    "devEngines": {
+        "packageManager": {
+            "name": "npm",
+            "version": "12.2.3",
+            "onFail": "download"
+        }
     }
-  },
-  "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
-    "@mui/material": "^9.6.0",
-    "dexie": "^4.4.7",
-    "dexie-react-hooks": "^4.4.0",
-    "react": "^19.3.1",
-    "react-dom": "^19.3.1"
-  }
 }
