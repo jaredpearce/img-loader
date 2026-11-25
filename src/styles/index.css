@@ -1,8 +1,78 @@
 :root {
-    --font-size-default: 1rem;
+  --font-size-default: 1rem;
+  /* color variables */
+  --aside-bg-color1: #074179;
+  --aside-bg-color2: #006392;
+  --main-bg-color1: #f6f8fe;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: var(--font-size-default, 16px);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: var(--font-size-default, 16px);
+}
+
+.page {
+  box-sizing: border-box;
+  height: calc(100vh - 8px);
+  margin: 4px;
+  outline: 2px solid cadetblue;
+
+  &--aside:after,
+  &--main:after {
+    clear: both;
+    content: '';
+    display: table-cell;
+  }
+
+  &--aside {
+    background: linear-gradient(var(--aside-bg-color1), var(--aside-bg-color2));
+    float: left;
+    height: 100%;
+    width: 216px;
+  }
+
+  &--main {
+    float: left;
+    height: 100%;
+    width: calc(100% - 216px);
+  }
+}
+
+@supports (display: grid) {
+  .page {
+    align-content: stretch;
+    display: grid;
+    gap: 0;
+    grid-template:
+      [row1-start] 'pageAside' [row1-end]
+      [row2-start] 'pageMain' [row2-end]
+      / 1fr;
+
+    &--aside {
+      width: unset;
+    }
+
+    /* &--main {} */
+
+    @media screen and (min-width: 720px) {
+      /* gap: [row-gap] [column-gap] */
+      gap: 0 12px;
+      grid-template:
+        [row1-start] 'pageAside pageMain' [row1-end]
+        / 216px 1fr;
+
+      &--aside {
+        float: unset;
+        grid-area: pageAside;
+        height: unset;
+      }
+
+      &--main {
+        background-color: #cccdcd;
+        float: unset;
+        grid-area: pageMain;
+        width: unset;
+      }
+    }
+  }
 }
