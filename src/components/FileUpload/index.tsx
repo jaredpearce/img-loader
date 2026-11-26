@@ -17,58 +17,46 @@ const VisuallyHiddenInput = styled('input')({
 });
 
 export default function InputFileUpload() {
+  async function addImage() {
+    const id = await saveImages({});
+  }
 
-    async function addImage() {
-        const id = await saveImages({
-
-        });
+  const handleImageUpload = async (
+    event: React.FormEvent<HTMLInputElement>,
+  ) => {
+    const f: FileList = event.target.files || {};
+    console.log('img', event.target.files);
+    try {
+      console.log('tryinnnng');
+      const id = await db.images.add({
+        uuid: crypto.randomUUID(),
+        imageData: f[0],
+        // imageHash: Uint8Array.from(f),
+        ...f,
+      });
+      console.log('---> ID', id);
+    } catch (error) {
+      console.log('error', error);
     }
-    
-    const handleImageUpload = async (event: React.FormEvent<HTMLInputElement>) => {
-        const f: Image[] = event.target.files || {};
-        console.log('FILES', event.target.files);
-        // Handle multiple file uploads
-        // const stuff: Image[] = [];
-        // for(const img of f) {
-        //     console.log('- img', img);
-        //     stuff.push({
-        //         uuid: crypto.randomUUID(),
-        //         fileName: img.name,
-        //         lastModified: img.lastModified,
-        //         type: img.type,
-        //         size: img.size
-        //     });
-        // }
+  };
 
-        try {
-            const id = await db.images.add({
-                uuid: crypto.randomUUID(),
-                ...f
-            });
-            console.log('---> ID', id);
-        } catch (error) {
-            console.log('error', error);
-
-        }
-    };
-
-    return (
-        <Button
-        style={{ width: 200 }}
-        size="small"
-        component="label"
-        role={undefined}
-        variant="contained"
-        tabIndex={-1}
-        startIcon={<CloudUploadIcon />}
-        >
-        Upload files
-        <VisuallyHiddenInput
-            type="file"
-            onChange={handleImageUpload}
-            // multiple
-            accept="image/png, image/jpeg, image/jpg, image/giff"
-        />
-        </Button>
-    );
+  return (
+    <Button
+      style={{ width: 200 }}
+      size="small"
+      component="label"
+      role={undefined}
+      variant="contained"
+      tabIndex={-1}
+      startIcon={<CloudUploadIcon />}
+    >
+      Upload files
+      <VisuallyHiddenInput
+        type="file"
+        onChange={handleImageUpload}
+        // multiple
+        accept="image/png, image/jpeg, image/jpg, image/giff"
+      />
+    </Button>
+  );
 }

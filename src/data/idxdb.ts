@@ -10,8 +10,8 @@ export interface User {
 }
 
 export enum Stores {
-//   Users = 'users',
-    Images = 'images',
+  //   Users = 'users',
+  Images = 'images',
 }
 
 export const initDB = (): Promise<boolean> => {
@@ -30,21 +30,23 @@ export const initDB = (): Promise<boolean> => {
       // no need to resolve here
     };
 
-    request.onsuccess = () => {
+    request.onsuccess = (event) => {
       db = request.result;
       version = db.version;
       console.log('request.onsuccess - initDB', version);
       resolve(true);
     };
 
-    request.onerror = () => {
+    request.onerror = (event) => {
       resolve(false);
     };
   });
 };
 
-
-export const saveImage = <T>(storeName: string, data: T): Promise<T|string|null> => {
+export const saveImage = <T>(
+  storeName: string,
+  data: T,
+): Promise<T | string | null> => {
   return new Promise((resolve) => {
     request = indexedDB.open('imgDB', version);
 
@@ -58,7 +60,7 @@ export const saveImage = <T>(storeName: string, data: T): Promise<T|string|null>
     };
 
     request.onerror = () => {
-      const error = request.error?.message
+      const error = request.error?.message;
       if (error) {
         resolve(error);
       } else {
@@ -83,12 +85,16 @@ export const deleteImg = (storeName: string, key: string): Promise<boolean> => {
       };
       res.onerror = () => {
         resolve(false);
-      }
+      };
     };
   });
 };
 
-export const updateImg = <T>(storeName: string, key: string, data: T): Promise<T|string|null> => {
+export const updateImg = <T>(
+  storeName: string,
+  key: string,
+  data: T,
+): Promise<T | string | null> => {
   return new Promise((resolve) => {
     request = indexedDB.open('imgDB', version);
 
@@ -105,7 +111,7 @@ export const updateImg = <T>(storeName: string, key: string, data: T): Promise<T
       };
       res.onerror = () => {
         resolve(null);
-      }
+      };
     };
   });
 };
@@ -126,4 +132,3 @@ export const getStoreData = <T>(storeName: Stores): Promise<T[]> => {
     };
   });
 };
-

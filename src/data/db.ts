@@ -1,17 +1,28 @@
-import { Dexie, type EntityTable } from "dexie"
+import { Dexie, type EntityTable } from 'dexie';
 
 import { type Image } from './Image';
 
-const db = new Dexie("ImageListDatabase") as Dexie & {
-    images: EntityTable<
-    Image,
-    "id" // primary key "id" (for the typings only)
-    >
+export class ImgLoader extends Dexie {
+  images!: Table<Image, '++id'>;
+
+  constructor() {
+    super('ImgLoader');
+    this.version(1).stores({
+      images: '++id, name, &uid',
+    });
+  }
+
+  deleteList(imgId: number) {
+    return this.transaction('rw', this.images, () => {
+      this.images.where({ imgId }).delete();
+    });
+  }
 }
 
-// Schema declaration:
-db.version(1).stores({
-    images: "++id, fileName, lastModified, type", // Primary key and indexed props
-});
+export const db = new ImgLoader();
 
-export { db }
+export function resetDatabase() {
+  return db.transaction('rw', db.images, async () => {
+    await Promise.all(db.tables.map((table) => table.clear()));
+  });
+}
