@@ -1,10 +1,10 @@
 import { Card, Space, Typography, Button } from 'antd';
 import { useState } from 'react';
 
+import ImageList from './components/ImageList';
+import ImageLoader from './components/ImageLoader';
+import ImageSearch from './components/ImageSearch';
 import { db } from './data/db';
-import ImageList from './ImageList';
-import ImageLoader from './ImageLoader';
-import ImageSearch from './ImageSearch';
 
 const { Title } = Typography;
 
@@ -41,31 +41,26 @@ export default function () {
     setSearchTerm(term);
   };
 
+  const handleDBRestore = async () => {
+    try {
+      await db.transaction('rw', db.images, async () => {
+        await db.tables.map((table) => table.clear());
+      });
+    } catch (error) {
+      console.log('not processsing delete', error);
+    }
+  };
+
   return (
-    <main>
-      <section>
-        <Space style={{ marginBottom: 16 }}>
-          <ImageSearch filter={handleFilter} />
-          <ImageLoader />
-          <Button
-            onClick={async () => {
-              try {
-                await db.transaction('rw', db.images, async () => {
-                  const stuff = await Promise.all(
-                    db.tables.map((table) => table.clear()),
-                  );
-                  console.log('DONE!!!', stuff);
-                });
-              } catch (error) {
-                console.log('not processsing delete', error);
-              }
-            }}
-          >
-            Clear DB
-          </Button>
-        </Space>
+    <Card variant="borderless" className="page">
+      <Space>
+        <ImageSearch filter={handleFilter} />
+        <ImageLoader />
+        <Button onClick={handleDBRestore}>Clear DB</Button>
+      </Space>
+      <section className="page-list">
         <ImageList name={searchTerm} />
       </section>
-    </main>
+    </Card>
   );
 }

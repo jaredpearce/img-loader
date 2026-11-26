@@ -1,78 +1,44 @@
+@import url('./reset.css');
+
 :root {
   --font-size-default: 1rem;
   /* color variables */
+  --color-grey-0: oklch(0.9807 0.0051 247.88); /* #f6f9fc */
+  --color-grey-1: oklch(0.8798 0.0088 247.93); /* #d3d8dd */
+  --color-grey-2: oklch(0.7792 0.0127 247.99); /* #b1b8bf */
+  --color-grey-3: oklch(0.6793 0.0162 251.22); /* #9199a2 */
+  --color-grey-4: oklch(0.5788 0.0188 250.96); /* #727b85 */
+  --color-grey-5: oklch(0.4814 0.0163 248.17); /* #575f67 */
+  --color-grey-7: oklch(0.2795 0.0085 255.57); /* #26292d */
+
+  --effect-small: 0 2px 4px 0 oklch(0 0 0 / 0.25);
+  --effect-medium: 0 4px 12px 0 oklch(0 0 0 / 0.25);
+
   --aside-bg-color1: #074179;
   --aside-bg-color2: #006392;
   --main-bg-color1: #f6f8fe;
 }
 
 body {
+  background-color: var(--color-grey-5);
+  color: var(--color-grey-7);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: var(--font-size-default, 16px);
 }
 
 .page {
-  box-sizing: border-box;
-  height: calc(100vh - 8px);
-  margin: 4px;
-  outline: 2px solid cadetblue;
-
-  &--aside:after,
-  &--main:after {
-    clear: both;
-    content: '';
-    display: table-cell;
-  }
-
-  &--aside {
-    background: linear-gradient(var(--aside-bg-color1), var(--aside-bg-color2));
-    float: left;
-    height: 100%;
-    width: 216px;
-  }
-
-  &--main {
-    float: left;
-    height: 100%;
-    width: calc(100% - 216px);
-  }
+  background-color: var(--color-grey-0);
+  box-shadow: var(--effect-small);
+  height: 95vh;
+  margin: 0 auto;
 }
 
-@supports (display: grid) {
+figcaption {
+  font-size: 0.75rem;
+}
+
+@media screen and (min-width: 720px) {
   .page {
-    align-content: stretch;
-    display: grid;
-    gap: 0;
-    grid-template:
-      [row1-start] 'pageAside' [row1-end]
-      [row2-start] 'pageMain' [row2-end]
-      / 1fr;
-
-    &--aside {
-      width: unset;
-    }
-
-    /* &--main {} */
-
-    @media screen and (min-width: 720px) {
-      /* gap: [row-gap] [column-gap] */
-      gap: 0 12px;
-      grid-template:
-        [row1-start] 'pageAside pageMain' [row1-end]
-        / 216px 1fr;
-
-      &--aside {
-        float: unset;
-        grid-area: pageAside;
-        height: unset;
-      }
-
-      &--main {
-        background-color: #cccdcd;
-        float: unset;
-        grid-area: pageMain;
-        width: unset;
-      }
-    }
+    max-width: 75vw;
   }
 }

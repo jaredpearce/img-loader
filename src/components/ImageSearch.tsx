@@ -3,6 +3,9 @@ import { FC, useState } from 'react';
 
 const { Search } = Input;
 
+/**
+ * Debounce used as a delay to give time for the user to stop typing.
+ */
 function debounce(fn, delay) {
   let timer;
   return (...args) => {
@@ -11,13 +14,12 @@ function debounce(fn, delay) {
   };
 }
 
-interface ImageStuff {
-  filter: Function;
-}
-
-const ImageSearch: FC<ImageStuff> = (params) => {
-  const { filter } = params;
-
+/**
+ * Provides the mechanism to filter the visible list of images.
+ * @params {Function} filter - provides a callback for the parent component.
+ * @returns {ReactComponent} Delivers a text input used for list filtering.
+ */
+const ImageSearch: FC<Function> = ({ filter }) => {
   const handleSearch = debounce((term: string) => {
     if (filter) {
       filter(term);
@@ -28,13 +30,6 @@ const ImageSearch: FC<ImageStuff> = (params) => {
     const value = e.target.value;
     handleSearch(value);
   };
-
-  // const onSearch: SearchProps['onSearch'] = (e) => {
-  //   const term = e.target.value;
-  //   if (search) {
-  //     search(term);
-  //   }
-  // };
 
   return (
     <Search

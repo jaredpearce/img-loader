@@ -1,9 +1,9 @@
 export interface Image {
   id?: string; // assigned by indexedDB
-  imageData: File | Blob; // stored by not indexed!
-  imageHash?: Uint8Array; // MD5 digest
+  imageData: File | Blob; // stored but not indexed!
+  src?: string;
 
-  uuid?: string; // should be UUID
+  uid?: string; // should be UUID
   name: string;
   lastModified: number | Date;
   size: number;

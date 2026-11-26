@@ -4,7 +4,6 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 // Local content
-import App from './App';
 import View from './View';
 
 import './styles/index.css';
@@ -14,19 +13,15 @@ createRoot(document.getElementById('app')!).render(
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: '#1890ff',
+          colorPrimary: '#005f9e',
           borderRadius: 4,
           boxShadow: 0,
+          primaryShadow: 0,
         },
-        components: {
-          Card: {
-            headerBg: 'grey',
-          },
-        },
+        components: {},
       }}
       locale={enUS}
     >
-      {/* <App /> */}
       <View />
     </ConfigProvider>
   </StrictMode>,
