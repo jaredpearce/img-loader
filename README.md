@@ -5,7 +5,7 @@ Purpose: provide simple UI for uploading images for client review.
 Task meta:
 
 - Start time: 9:05 am (Wednesday, 11/25/2026)
-- End time: 11:00 am (Thursday, 11/26/2026)
+- End time: 11:43 am (Thursday, 11/26/2026)
 
 Included images in the `src/assets` directory for upload.
 
