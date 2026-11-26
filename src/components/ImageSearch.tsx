@@ -1,32 +1,37 @@
-import { Input, type SearchProps } from 'antd';
-import { FC, useState } from 'react';
+import { Input } from 'antd';
+import { type FC } from 'react';
 
 const { Search } = Input;
 
 /**
  * Debounce used as a delay to give time for the user to stop typing.
  */
-function debounce(fn, delay) {
-  let timer;
-  return (...args) => {
+function debounce(fn: Function, delay: number) {
+  let timer: number;
+  return (...args: any[]) => {
     clearTimeout(timer);
     timer = setTimeout(() => fn(...args), delay);
   };
 }
 
+type ImageProps = { 
+  filter: (term: string) => void;
+};
+
+
 /**
  * Provides the mechanism to filter the visible list of images.
- * @params {Function} filter - provides a callback for the parent component.
+ * @params {ImageProps} filter - provides a callback for the parent component.
  * @returns {ReactComponent} Delivers a text input used for list filtering.
  */
-const ImageSearch: FC<Function> = ({ filter }) => {
+const ImageSearch: FC<ImageProps> = ({ filter }) => {
   const handleSearch = debounce((term: string) => {
     if (filter) {
       filter(term);
     }
   }, 300);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     handleSearch(value);
   };

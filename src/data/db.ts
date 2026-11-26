@@ -1,4 +1,4 @@
-import { Dexie, type EntityTable } from 'dexie';
+import { Dexie, type Table } from 'dexie';
 
 import { type Image } from './Image';
 

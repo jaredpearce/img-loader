@@ -1,11 +1,12 @@
 export interface Image {
-  id?: string; // assigned by indexedDB
+  id?: any; // assigned by indexedDB
   imageData: File | Blob; // stored but not indexed!
   src?: string;
 
-  uid?: string; // should be UUID
+  uid: string; // provided through antd Upload component
   name: string;
-  lastModified: number | Date;
+  fileName: string; // provides the name value only
+  lastModified: number | undefined;
   size: number;
   type: 'image/png' | 'image/jpg' | 'image/jpeg' | 'image/gif';
   webkitRelativePath?: string;

@@ -1,16 +1,20 @@
 import Icon, { DeleteOutlined } from '@ant-design/icons';
-import { Image, Button, Masonry } from 'antd';
+import { Button, Masonry } from 'antd';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { FC } from 'react';
+import { type FC } from 'react';
 
 import { db } from '../data/db';
 
+type ImageListProps = {
+  name: string;
+}
+
 /**
  * Makes a request to indexeddb to retrieve all available data.
- * @params {name} Search term used to filter the data. Initially set to ''.
+ * @params {ImageListProps} Search term used to filter the data. Initially set to ''.
  * @returns {ReactComponent}
  */
-const ImageList: FC<string> = ({ name }) => {
+const ImageList: FC<ImageListProps> = ({ name }) => {
   const images = useLiveQuery(
     async () => db.images.filter((src) => src.name.includes(name)).toArray(),
     [name],
@@ -19,8 +23,10 @@ const ImageList: FC<string> = ({ name }) => {
   /**
    * Removes item from the database based off of the image `id`.
    */
-  const handleDelete = (img: File) => {
-    const stuff = db.images.delete(img.id);
+  const handleDelete = (img: Partial<File & { id: any}>) => {
+    if (img.id) {
+      db.images.delete(img.id);
+    }
   };
 
   if (!images)
@@ -56,7 +62,7 @@ const ImageList: FC<string> = ({ name }) => {
             </figure>
 
             <Button
-              type="text"
+              type="dashed"
               onClick={() => handleDelete(data)}
               style={{ position: 'absolute', top: 12, right: 12 }}
             >
